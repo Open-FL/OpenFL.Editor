@@ -1,0 +1,37 @@
+@option BACK_COLOR: #000000;
+@option FORE_COLOR: #FFFFFF;
+@option CRITICAL_COLOR: #FF0000;
+
+!form & !loader
+{
+	BackColor: %BACK_COLOR%;
+	BackgroundColor: %BACK_COLOR%;
+	ForeColor: %FORE_COLOR%;
+	BorderStyle: FixedSingle;
+	DropDrownStyle: DropDownList;
+	FlatStyle: Flat;
+}
+
+
+progress & loader
+{
+	FillColor: %FORE_COLOR%;
+	BackColor: %BACK_COLOR%;
+}
+
+loader & !form & !splash
+{
+	BackColor: %BACK_COLOR%;
+}
+
+CheckBox
+{
+	FlatStyle: Standard;
+	ForeColor: %FORE_COLOR%;
+}
+
+critical
+{
+	ForeColor: %CRITICAL_COLOR%;
+}
+
