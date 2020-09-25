@@ -9,7 +9,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "FL", "FL", "{39F0ACCD-FD03-
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "CL", "CL", "{FA4B806D-A119-435A-AB5E-E1652744DFEE}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "OpenCL", "..\deps\OpenFL\deps\OpenCL.Wrapper\deps\OpenCL\src\OpenCL\OpenCL.csproj", "{E469C8A6-90A7-46B8-9A92-39CD2F46AFA6}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "OpenCL.NET", "..\deps\OpenFL\deps\OpenCL.Wrapper\deps\OpenCL\src\OpenCL\OpenCL.NET.csproj", "{E469C8A6-90A7-46B8-9A92-39CD2F46AFA6}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Utility", "..\deps\OpenFL\deps\OpenCL.Wrapper\deps\Utility\src\Utility\Utility.csproj", "{6DBECCF1-4481-4B29-B7E2-776A06305644}"
 EndProject
