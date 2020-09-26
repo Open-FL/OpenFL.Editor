@@ -20,6 +20,8 @@ namespace OpenFL.Editor.Utils.Plugins
     public class DefaultToolbarItems : APlugin<FLEditorPluginHost>
     {
 
+        public override string Name => "fl-editor-toolbar";
+
         private ListPluginsForm pluginList;
         [ToolbarItem("Plugins", 5)]
         private void PluginDummy()

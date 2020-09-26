@@ -17,6 +17,7 @@ using OpenFL.ResourceManagement;
 using PluginSystem.Core;
 using PluginSystem.Core.Interfaces;
 using PluginSystem.Core.Pointer;
+using PluginSystem.DefaultPlugins.Formats;
 using PluginSystem.DefaultPlugins.Formats.PackageData;
 using PluginSystem.DefaultPlugins.Formats.Packer;
 using PluginSystem.Events.Args;
@@ -300,35 +301,8 @@ namespace OpenFL.Editor
                     }
                 }
             }
-            ReloadDefaultPlugins();
-        }
-
-        private static void ReloadDefaultPlugins()
-        {
-            PluginManager.AddPlugin(
-                                    FolderPackerFormat.Embedded(),
-                                    new PluginAssemblyPointer("dir-packer", "", "", PluginManager.PluginHost)
-                                   );
-            PluginManager.AddPlugin(
-                                    new ZipPackerFormat(),
-                                    new PluginAssemblyPointer("zip-packer", "", "", PluginManager.PluginHost)
-                                   );
-            PluginManager.AddPlugin(
-                                    VSBuildPlugin.Embedded(),
-                                    new PluginAssemblyPointer(
-                                                              "vs-packer",
-                                                              "", "",
-                                                              PluginManager.PluginHost
-                                                             )
-                                   );
-            PluginManager.AddPlugin(
-                                    PlainTextDataFormat.Embedded(),
-                                    new PluginAssemblyPointer("plain-packer", "", "", PluginManager.PluginHost)
-                                   );
-            PluginManager.AddPlugin(
-                                    new DLLPackerFormat(),
-                                    new PluginAssemblyPointer("dll-packer", "", "", PluginManager.PluginHost)
-                                   );
+            
+            HelperClass.ReloadDefaultPlugins();
         }
 
         private static void PluginManagerLoadLog(LogMessageEventArgs eventargs)
