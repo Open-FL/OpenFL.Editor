@@ -270,14 +270,16 @@ namespace OpenFL.Editor
             PluginManager.Initialize(
                                      Path.Combine(PluginPaths.EntryDirectory, "data"),
                                      "internal",
-                                     "plugins", (msg, title) =>
-                                                    MessageBox.Show(
-                                                                    msg,
-                                                                    title,
-                                                                    MessageBoxButtons.YesNo,
-                                                                    MessageBoxIcon.Question
-                                                                   ) ==
-                                                    DialogResult.Yes,
+                                     "plugins",
+                                     (msg, title) =>
+                                         MessageBox.Show(
+                                                         msg,
+                                                         title,
+                                                         MessageBoxButtons.YesNo,
+                                                         MessageBoxIcon.Question
+                                                        ) ==
+                                         DialogResult.Yes,
+                                     SetProgress,
                                      Path.Combine(PluginPaths.EntryDirectory, "static-data.sd")
                                     );
             if (FLScriptEditor.Settings.PluginInit != null)
