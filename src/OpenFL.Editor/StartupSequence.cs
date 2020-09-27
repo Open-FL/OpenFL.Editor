@@ -303,8 +303,6 @@ namespace OpenFL.Editor
                     }
                 }
             }
-            
-            HelperClass.ReloadDefaultPlugins();
         }
 
         private static void PluginManagerLoadLog(LogMessageEventArgs eventargs)
@@ -330,7 +328,7 @@ namespace OpenFL.Editor
                                                         x,
                                                         new PluginAssemblyPointer(
                                                                                   x.Name,
-                                                                                  "", "",
+                                                                                  "", "","9.9.9.9",
                                                                                   editor.PluginHost
                                                                                  )
                                                        );
