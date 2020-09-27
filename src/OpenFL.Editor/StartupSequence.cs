@@ -265,6 +265,7 @@ namespace OpenFL.Editor
 
         public static void InitializePluginSystem()
         {
+            loaderForm.TopMost = false;
             PluginManager.OnLog += args => pluginLogger.Log(LogType.Log, args.Message, 1);
             PluginManager.OnLog += PluginManagerLoadLog;
             PluginManager.Initialize(
@@ -303,6 +304,7 @@ namespace OpenFL.Editor
                     }
                 }
             }
+            loaderForm.TopMost = true;
         }
 
         private static void PluginManagerLoadLog(LogMessageEventArgs eventargs)
