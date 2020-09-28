@@ -38,7 +38,10 @@ namespace OpenFL.Editor.Forms.Util
 
         private void tbPath_TextChanged(object sender, EventArgs e)
         {
-            btnLoad.Enabled = (Directory.Exists(tbPath.Text) || File.Exists(tbPath.Text)) &&
+            btnLoad.Enabled = //(Directory.Exists(tbPath.Text) ||
+            //                   File.Exists(tbPath.Text) ||
+            //                   tbPath.Text.StartsWith("http://") ||
+            //                   tbPath.Text.StartsWith("https://")) &&
                               PluginPacker.CanLoad(tbPath.Text);
         }
 
