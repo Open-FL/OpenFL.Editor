@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Drawing;
 using System.IO;
 using System.Windows.Forms;
 
@@ -7,6 +8,7 @@ using PluginSystem.FileSystem.Packer;
 using PluginSystem.StartupActions;
 
 using ThemeEngine;
+using ThemeEngine.Forms;
 
 namespace OpenFL.Editor.Forms.Util
 {
@@ -48,7 +50,12 @@ namespace OpenFL.Editor.Forms.Util
         private void btnLoad_Click(object sender, EventArgs e)
         {
             AddPackage(tbPath.Text, cbActivate.Checked);
-            MessageBox.Show("Will be installed on restart");
+            StyledMessageBox.Show(
+                                  "Startup Action Written",
+                                  "Will be installed on restart",
+                                  MessageBoxButtons.OK,
+                                  SystemIcons.Information
+                                 );
             Close();
         }
 
@@ -75,7 +82,7 @@ namespace OpenFL.Editor.Forms.Util
                 Close();
             }
             ofdSelectFile.Multiselect = false;
-            MessageBox.Show("Will be installed on restart");
+            StyledMessageBox.Show("Startup Action Written", "Will be installed on restart", MessageBoxButtons.OK, SystemIcons.Information);
         }
 
     }

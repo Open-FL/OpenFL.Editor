@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Drawing;
 using System.Linq;
 using System.Reflection;
 using System.Windows.Forms;
@@ -12,6 +13,7 @@ using PluginSystem.Core.Pointer;
 using PluginSystem.Utility;
 
 using ThemeEngine;
+using ThemeEngine.Forms;
 
 using Utility.WindowsForms.CustomControls.ToolStripPaths;
 
@@ -165,7 +167,7 @@ namespace OpenFL.Editor.Utils.Plugins
             }
             else
             {
-                method = () => { MessageBox.Show("Could not bind", "Error", MessageBoxButtons.OK); };
+                method = () => { StyledMessageBox.Show("Could not bind", "Error", MessageBoxButtons.OK, SystemIcons.Error); };
             }
 
             return method;
@@ -200,7 +202,7 @@ namespace OpenFL.Editor.Utils.Plugins
                 };
             }
 
-            return () => { MessageBox.Show("Could not bind", "Error", MessageBoxButtons.OK); };
+            return () => { StyledMessageBox.Show("Could not bind", "Error", MessageBoxButtons.OK, SystemIcons.Error); };
         }
 
 

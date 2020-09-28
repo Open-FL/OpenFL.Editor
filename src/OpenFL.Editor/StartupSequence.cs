@@ -27,6 +27,7 @@ using PluginSystem.StartupActions;
 using PluginSystem.Utility;
 
 using ThemeEngine;
+using ThemeEngine.Forms;
 
 using Utility.ADL;
 using Utility.ADL.Configs;
@@ -275,11 +276,11 @@ namespace OpenFL.Editor
                                      "internal",
                                      "plugins",
                                      (msg, title) =>
-                                         MessageBox.Show(
+                                         StyledMessageBox.Show(
                                                          msg,
                                                          title,
                                                          MessageBoxButtons.YesNo,
-                                                         MessageBoxIcon.Question
+                                                         SystemIcons.Question
                                                         ) ==
                                          DialogResult.Yes,
                                      SetProgress,
@@ -351,12 +352,11 @@ namespace OpenFL.Editor
                 }
                 catch (Exception e)
                 {
-                    DialogResult res = MessageBox.Show(
+                    DialogResult res = StyledMessageBox.Show(
                                                        $"Could not load the Settings file at path: {Path.Combine(FLScriptEditor.ConfigPath, "fleditor.settings.xml")}\nTo Fix this issue the editor can delete the file.\nDo you want to delete the file?",
                                                        "Settings Load Error",
                                                        MessageBoxButtons.YesNoCancel,
-                                                       MessageBoxIcon.Error,
-                                                       MessageBoxDefaultButton.Button3
+                                                       SystemIcons.Error
                                                       );
                     if (res == DialogResult.Yes)
                     {
@@ -366,11 +366,11 @@ namespace OpenFL.Editor
                         }
                         catch (Exception exception)
                         {
-                            MessageBox.Show(
+                            StyledMessageBox.Show(
                                             "Could not delete the File.",
                                             "Warning",
                                             MessageBoxButtons.OK,
-                                            MessageBoxIcon.Exclamation
+                                            SystemIcons.Exclamation
                                            );
                         }
                     }
