@@ -50,7 +50,7 @@ namespace OpenFL.Editor
         private static readonly PipeStream logStream = new PipeStream();
         public static FLDataContainer FlContainer;
 
-        public static event Action CustomStartupActions; 
+        public static event Action CustomStartupActions;
 
 
 
@@ -150,7 +150,7 @@ namespace OpenFL.Editor
             {
                 return;
             }
-            
+
 
             SetProgress("Running Custom Actions", 5, maxTasks);
             loaderForm.Log("Running Custom Actions", Color.White);
@@ -269,7 +269,7 @@ namespace OpenFL.Editor
             loaderForm.TopMost = false;
             PluginManager.OnLog += args => pluginLogger.Log(LogType.Log, args.Message, 1);
             PluginManager.OnLog += PluginManagerLoadLog;
-            PluginManager.OnInitialized+= PluginManagerOnOnInitialized;
+            PluginManager.OnInitialized += PluginManagerOnOnInitialized;
             PluginManager.Initialize(
                                      Path.Combine(PluginPaths.EntryDirectory, "data"),
                                      "internal",
@@ -285,7 +285,7 @@ namespace OpenFL.Editor
                                      SetProgress,
                                      Path.Combine(PluginPaths.EntryDirectory, "static-data.sd")
                                     );
-            
+
             loaderForm.TopMost = true;
         }
 
@@ -322,25 +322,20 @@ namespace OpenFL.Editor
         {
 
             AttributeManager.AddAttributeHandler(new ToolbarItemAttributeHandler(editor));
-            
 
 
-            List<IPlugin> plugins =
-                PluginLoader.CreateTypesFromInterface(Assembly.GetExecutingAssembly(), editor.PluginHost);
-            plugins.ForEach(
-                            x =>
-                            {
-                                //loaderForm.Log("Loading Plugin: "+ x.GetType().Name, Color.Green);
-                                PluginManager.AddPlugin(
-                                                        x,
-                                                        new PluginAssemblyPointer(
-                                                                                  x.Name,
-                                                                                  "", "","9.9.9.9",
-                                                                                  editor.PluginHost
-                                                                                 )
-                                                       );
-                            }
-                           );
+            PluginManager.AddPlugin(
+                                    new DefaultToolbarItems(),
+                                    new PluginAssemblyPointer(
+                                                              "fl-editor-toolbar",
+                                                              "",
+                                                              "",
+                                                              "9.9.9.9",
+                                                              editor.PluginHost
+                                                             )
+                                   );
+
+
             PluginManager.LoadPlugins(editor.PluginHost);
         }
 
