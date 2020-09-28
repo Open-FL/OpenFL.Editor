@@ -4,6 +4,7 @@ using System.Windows.Forms;
 
 using PluginSystem.Core;
 using PluginSystem.FileSystem.Packer;
+using PluginSystem.StartupActions;
 
 using ThemeEngine;
 
@@ -43,12 +44,17 @@ namespace OpenFL.Editor.Forms.Util
 
         private void btnLoad_Click(object sender, EventArgs e)
         {
-            PluginManager.AddPackage(tbPath.Text, out string name);
-            if (cbActivate.Checked)
-            {
-                PluginManager.ActivatePackage(name, cbAddToExistingHosts.Checked);
-            }
+            AddPackage(tbPath.Text, cbActivate.Checked);
+            MessageBox.Show("Will be installed on restart");
             Close();
+        }
+
+        private static void AddPackage(string package, bool activate)
+        {
+            string action = activate
+                                ? ActionRunner.ADD_ACTIVATE_PACKAGE_ACTION
+                                : ActionRunner.ADD_PACKAGE_ACTION;
+            ActionRunner.AddActionToStartup($"{action} {package}");
         }
 
         private void button1_Click(object sender, EventArgs e)
@@ -60,17 +66,13 @@ namespace OpenFL.Editor.Forms.Util
                 for (int i = 0; i < files.Length; i++)
                 {
                     string file = files[i];
-                    PluginManager.AddPackage(file, out string name);
-                    if (cbActivate.Checked)
-                    {
-                        PluginManager.ActivatePackage(name, cbAddToExistingHosts.Checked);
-                    }
+                    AddPackage(file, cbActivate.Checked);
                 }
 
                 Close();
             }
-
             ofdSelectFile.Multiselect = false;
+            MessageBox.Show("Will be installed on restart");
         }
 
     }

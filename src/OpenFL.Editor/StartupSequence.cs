@@ -23,6 +23,7 @@ using PluginSystem.DefaultPlugins.Formats.Packer;
 using PluginSystem.Events.Args;
 using PluginSystem.FileSystem;
 using PluginSystem.Loading.Plugins;
+using PluginSystem.StartupActions;
 using PluginSystem.Utility;
 
 using ThemeEngine;
@@ -268,6 +269,7 @@ namespace OpenFL.Editor
             loaderForm.TopMost = false;
             PluginManager.OnLog += args => pluginLogger.Log(LogType.Log, args.Message, 1);
             PluginManager.OnLog += PluginManagerLoadLog;
+            PluginManager.OnInitialized+= PluginManagerOnOnInitialized;
             PluginManager.Initialize(
                                      Path.Combine(PluginPaths.EntryDirectory, "data"),
                                      "internal",
@@ -283,6 +285,12 @@ namespace OpenFL.Editor
                                      SetProgress,
                                      Path.Combine(PluginPaths.EntryDirectory, "static-data.sd")
                                     );
+            
+            loaderForm.TopMost = true;
+        }
+
+        private static void PluginManagerOnOnInitialized()
+        {
             if (FLScriptEditor.Settings.PluginInit != null)
             {
                 loaderForm.Log("Running Initialization", Color.OrangeRed);
@@ -297,14 +305,11 @@ namespace OpenFL.Editor
                                                              );
                         foreach (string plugin in plugins)
                         {
-                            PluginManager.AddPackage(plugin, out string name);
-                            PluginManager.ActivatePackage(name);
-                            loaderForm.Log($"Added Plugin: " + name, Color.OrangeRed);
+                            ActionRunner.AddActionToStartup($"{ActionRunner.ADD_ACTIVATE_PACKAGE_ACTION} {plugin}");
                         }
                     }
                 }
             }
-            loaderForm.TopMost = true;
         }
 
         private static void PluginManagerLoadLog(LogMessageEventArgs eventargs)

@@ -7,6 +7,7 @@ using PluginSystem.Core;
 using PluginSystem.Core.Interfaces;
 using PluginSystem.Core.Pointer;
 using PluginSystem.FileSystem;
+using PluginSystem.StartupActions;
 using PluginSystem.Utility;
 
 using ThemeEngine;
@@ -81,11 +82,11 @@ namespace OpenFL.Editor.Forms.Util
                     BasePluginPointer ptr = new BasePluginPointer(lbPlugins.SelectedItem.ToString());
                     if (!isActive)
                     {
-                        PluginManager.ActivatePackage(ptr.PluginName);
+                        ActionRunner.AddActionToStartup($"{ActionRunner.ACTIVATE_PACKAGE_ACTION} {ptr.PluginName}");
                     }
                     else
                     {
-                        PluginManager.DeactivatePackage(ptr.PluginName);
+                        ActionRunner.AddActionToStartup($"{ActionRunner.DEACTIVATE_PACKAGE_ACTION} {ptr.PluginName}");
                     }
                     lbPlugins.Items.Remove(lbPlugins.SelectedItem);
                 }
