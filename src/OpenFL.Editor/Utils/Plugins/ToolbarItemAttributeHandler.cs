@@ -167,7 +167,7 @@ namespace OpenFL.Editor.Utils.Plugins
             }
             else
             {
-                method = () => { StyledMessageBox.Show("Could not bind", "Error", MessageBoxButtons.OK, SystemIcons.Error); };
+                method = () => { StyledMessageBox.Show("Error", "Could not bind", MessageBoxButtons.OK, SystemIcons.Error); };
             }
 
             return method;
@@ -202,7 +202,7 @@ namespace OpenFL.Editor.Utils.Plugins
                 };
             }
 
-            return () => { StyledMessageBox.Show("Could not bind", "Error", MessageBoxButtons.OK, SystemIcons.Error); };
+            return () => { StyledMessageBox.Show("Error", "Could not bind", MessageBoxButtons.OK, SystemIcons.Error); };
         }
 
 

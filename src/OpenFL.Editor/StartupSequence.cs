@@ -277,11 +277,11 @@ namespace OpenFL.Editor
                                      "plugins",
                                      (msg, title) =>
                                          StyledMessageBox.Show(
-                                                         msg,
-                                                         title,
-                                                         MessageBoxButtons.YesNo,
-                                                         SystemIcons.Question
-                                                        ) ==
+                                                               title,
+                                                               msg,
+                                                               MessageBoxButtons.YesNo,
+                                                               SystemIcons.Question
+                                                              ) ==
                                          DialogResult.Yes,
                                      SetProgress,
                                      Path.Combine(PluginPaths.EntryDirectory, "static-data.sd")
@@ -353,11 +353,11 @@ namespace OpenFL.Editor
                 catch (Exception e)
                 {
                     DialogResult res = StyledMessageBox.Show(
-                                                       $"Could not load the Settings file at path: {Path.Combine(FLScriptEditor.ConfigPath, "fleditor.settings.xml")}\nTo Fix this issue the editor can delete the file.\nDo you want to delete the file?",
-                                                       "Settings Load Error",
-                                                       MessageBoxButtons.YesNoCancel,
-                                                       SystemIcons.Error
-                                                      );
+                                                             "Settings Load Error",
+                                                             $"Could not load the Settings file at path: {Path.Combine(FLScriptEditor.ConfigPath, "fleditor.settings.xml")}\nTo Fix this issue the editor can delete the file.\nDo you want to delete the file?",
+                                                             MessageBoxButtons.YesNoCancel,
+                                                             SystemIcons.Error
+                                                            );
                     if (res == DialogResult.Yes)
                     {
                         try
@@ -367,11 +367,11 @@ namespace OpenFL.Editor
                         catch (Exception exception)
                         {
                             StyledMessageBox.Show(
-                                            "Could not delete the File.",
-                                            "Warning",
-                                            MessageBoxButtons.OK,
-                                            SystemIcons.Exclamation
-                                           );
+                                                  "Warning",
+                                                  "Could not delete the File.",
+                                                  MessageBoxButtons.OK,
+                                                  SystemIcons.Exclamation
+                                                 );
                         }
                     }
                     else if (res == DialogResult.Cancel)
