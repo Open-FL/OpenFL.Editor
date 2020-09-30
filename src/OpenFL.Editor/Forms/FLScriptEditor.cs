@@ -63,8 +63,7 @@ namespace OpenFL.Editor.Forms
         private static readonly string DEFAULT_SCRIPT =
             $"{FLKeywords.EntryFunctionKey}:\n\tsetactive 3\n\tSet_v 1\n\tsetactive 0 1 2\n\tSet_v 1";
 
-
-        private readonly Stream ms = new PipeStream();
+        
         public readonly FLEditorPluginHost PluginHost;
 
         public static string ConfigPath
@@ -121,12 +120,6 @@ namespace OpenFL.Editor.Forms
         private bool optimizationsDirty;
         private bool outputDirty = true;
 
-        private ContainerForm previewForm;
-
-        private PictureBox previewPicture;
-
-        private Task previewTask;
-
         public string WrittenText => rtbIn.Text;
 
         public Control PanelToolbar => panelToolbar;
@@ -144,6 +137,7 @@ namespace OpenFL.Editor.Forms
         {
             PluginHost = new FLEditorPluginHost(this);
             InitializeComponent();
+            CheckForIllegalCrossThreadCalls = false;
         }
 
         public FLScriptEditor(string path) : this()
@@ -365,39 +359,13 @@ namespace OpenFL.Editor.Forms
 
         private void OpenPreview()
         {
-            if (previewForm == null || previewForm.IsDisposed)
-            {
-                previewPicture = new PictureBox();
-                previewPicture.Dock = DockStyle.Fill;
-                previewPicture.Image = Resources.OpenFL;
-                previewPicture.SizeMode = PictureBoxSizeMode.Zoom;
-
-
-                StyleManager.RegisterControl(previewPicture, "default", "preview");
-
-                previewForm = ContainerForm.CreateContainer(
-                                                            previewPicture,
-                                                            null,
-                                                            "Preview: ",
-                                                            Resources.OpenFL_Icon,
-                                                            FormBorderStyle.SizableToolWindow
-                                                           );
-                CheckForIllegalCrossThreadCalls = false;
-
-                WriteAndBuild();
-                ComputePreview();
-            }
-            else
-            {
-                previewForm.Show();
-            }
+            WriteAndBuild();
+            FLImplementation.OpenPreview(SetLogOutput);
         }
 
         private void ClosePreview()
         {
-            previewForm?.Close();
-            previewForm = null;
-            previewPicture = null;
+            FLImplementation.ClosePreview();
         }
 
         #endregion

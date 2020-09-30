@@ -12,7 +12,10 @@ using OpenFL.Core.DataObjects.SerializableDataObjects;
 using OpenFL.Core.Parsing.StageResults;
 using OpenFL.Core.ProgramChecks;
 using OpenFL.Debugging;
+using OpenFL.Editor.Properties;
 using OpenFL.Editor.Utils;
+
+using ThemeEngine;
 
 using Utility.Exceptions;
 using Utility.FastString;
@@ -113,6 +116,41 @@ namespace OpenFL.Editor.Forms
                 output(s);
                 logMessage("Parsed Successfully.\n", SuccessColor());
                 return true;
+            }
+        }
+
+        public void ClosePreview()
+        {
+            previewForm?.Close();
+            previewForm = null;
+            previewPicture = null;
+        }
+
+        public void OpenPreview(Action<string, Color> logMessage)
+        {
+            if (previewForm == null || previewForm.IsDisposed)
+            {
+                previewPicture = new PictureBox();
+                previewPicture.Dock = DockStyle.Fill;
+                previewPicture.Image = Resources.OpenFL;
+                previewPicture.SizeMode = PictureBoxSizeMode.Zoom;
+
+
+                StyleManager.RegisterControl(previewPicture, "default", "preview");
+
+                previewForm = ContainerForm.CreateContainer(
+                                                            previewPicture,
+                                                            null,
+                                                            "Preview: ",
+                                                            Resources.OpenFL_Icon,
+                                                            FormBorderStyle.SizableToolWindow
+                                                           );
+
+                ComputePreview(logMessage);
+            }
+            else
+            {
+                previewForm.Show();
             }
         }
 
