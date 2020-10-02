@@ -7,7 +7,7 @@
     <ProjectGuid>{0DBA7A0D-7701-4DB4-B6AE-8C3D5D2ABDDA}</ProjectGuid>
     <OutputType>WinExe</OutputType>
     <RootNamespace>OpenFL.Editor</RootNamespace>
-    <AssemblyName>OpenFL.Editor</AssemblyName>
+    <AssemblyName>fledit</AssemblyName>
     <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
@@ -31,6 +31,9 @@
     <DefineConstants>TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup>
+    <ApplicationIcon>OpenFL.ico</ApplicationIcon>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />
