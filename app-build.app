@@ -1,5 +1,5 @@
 name: fledit
-branch: Debug
+branch: Release
 project-name: OpenFL.Editor
 flags: NO_INFO_TO_ZIP;NO_STRUCTURE
 
