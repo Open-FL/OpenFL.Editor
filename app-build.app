@@ -1,5 +1,14 @@
-name: fl
-include: .\src\OpenFL.Editor\bin\Debug\fledit.exe.config
-target: .\src\OpenFL.Editor\bin\Debug\fledit.exe
-output: .\docs\latest\fledit.zip
+name: fledit
+branch: Debug
+project-name: OpenFL.Editor
 flags: NO_INFO_TO_ZIP;NO_STRUCTURE
+
+#Additional Build Info
+include: %buildout%\%name%.exe.config
+
+#Build Info
+target: %buildout%\%name%.exe
+output: .\docs\latest\%name%.zip
+solution: .\src\%project-name%.sln
+buildout: .\src\%project-name%\bin\%branch%
+buildcmd: msbuild {0} /t:Build /p:Configuration=%branch%
