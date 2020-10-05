@@ -48,14 +48,11 @@ namespace OpenFL.Editor
                                                                   new ProjectDebugConfig("plugin-system", -1, 20, PrefixLookupSettings.AddPrefixIfAvailable));
 
         public static TextReader LogReader;
-        private static readonly PipeStream logStream = new PipeStream();
+        private static readonly PipeStream LogStream = new PipeStream();
         public static FLDataContainer FlContainer;
 
         public static event Action CustomStartupActions;
 
-
-
-        private static bool warmedUp;
         public static Loader loaderForm;
         private static Form mainForm;
 
@@ -131,7 +128,7 @@ namespace OpenFL.Editor
             }
             else if (mainForm is ExportViewer ev)
             {
-                ev.Container = FlContainer;
+                ev.FLContainer = FlContainer;
             }
         }
 
@@ -248,10 +245,10 @@ namespace OpenFL.Editor
             InternalADLProjectDebugConfig.Settings.MinSeverity = Verbosity.Level1;
             ManifestIODebugConfig.Settings.MinSeverity = Verbosity.Level1;
 
-            LogTextStream ls = new LogTextStream(logStream);
+            LogTextStream ls = new LogTextStream(LogStream);
             Debug.DefaultInitialization();
             Debug.AddOutputStream(ls);
-            LogReader = new StreamReader(logStream);
+            LogReader = new StreamReader(LogStream);
         }
 
         public static void InitializeResourceSystem()
@@ -350,7 +347,7 @@ namespace OpenFL.Editor
                         FLDebuggerSettings.Load(Path.Combine(FLScriptEditor.ConfigPath, "fleditor.settings.xml"));
                     FLScriptEditor.Settings = settings;
                 }
-                catch (Exception e)
+                catch (Exception)
                 {
                     DialogResult res = StyledMessageBox.Show(
                                                              "Settings Load Error",
@@ -364,7 +361,7 @@ namespace OpenFL.Editor
                         {
                             File.Delete(Path.Combine(FLScriptEditor.ConfigPath, "fleditor.settings.xml"));
                         }
-                        catch (Exception exception)
+                        catch (Exception)
                         {
                             StyledMessageBox.Show(
                                                   "Warning",
@@ -452,7 +449,6 @@ namespace OpenFL.Editor
 
         public static void RunForm(Form form)
         {
-            warmedUp = true;
             try
             {
                 Application.Run(form);

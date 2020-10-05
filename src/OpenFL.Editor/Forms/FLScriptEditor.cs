@@ -99,8 +99,6 @@ namespace OpenFL.Editor.Forms
 
         private string _path;
 
-        private bool ControlMod;
-
         public FLDataContainer FLContainer
         {
             get => FLImplementation?.FLContainer;
@@ -116,9 +114,6 @@ namespace OpenFL.Editor.Forms
         public FL FLImplementation { get; private set; }
 
         private bool ignoreChanged;
-
-        private bool optimizationsDirty;
-        private bool outputDirty = true;
 
         public string WrittenText => rtbIn.Text;
 
@@ -211,9 +206,6 @@ namespace OpenFL.Editor.Forms
 
             panelCodeArea.Resize += PanelCodeArea_Resize;
 
-            lbOptimizations.KeyDown += OnKeyDown;
-            lbOptimizations.KeyUp += OnKeyUp;
-
             tmrConsoleRefresh.Start();
 
 
@@ -228,8 +220,7 @@ namespace OpenFL.Editor.Forms
 
 
 
-
-            lbOptimizations.ItemCheck += LbOptimizationsOnItemCheck;
+            
             rtbParserOutput.TextChanged += RtbParserOutputTextChanged;
 
             FLContainer.SetCheckBuilder(new FLProgramCheckBuilder(FLContainer.InstructionSet, FLContainer.BufferCreator, FLProgramCheckType.All));
@@ -403,23 +394,6 @@ namespace OpenFL.Editor.Forms
         }
 
 
-        private void OnKeyUp(object sender, KeyEventArgs e)
-        {
-            if (e.KeyCode == Keys.ControlKey)
-            {
-                ControlMod = false;
-            }
-        }
-
-        private void OnKeyDown(object sender, KeyEventArgs e)
-        {
-            if (e.KeyCode == Keys.ControlKey)
-            {
-                ControlMod = true;
-            }
-        }
-
-
         private void cbLiveView_CheckedChanged(object sender, EventArgs e)
         {
             if (!cbLiveView.Checked)
@@ -455,15 +429,9 @@ namespace OpenFL.Editor.Forms
         {
             rtbParserOutput.ScrollToCaret();
         }
-
-        private void LbOptimizationsOnItemCheck(object sender, ItemCheckEventArgs e)
-        {
-            optimizationsDirty = true;
-        }
-
+        
         private void rtbIn_TextChanged(object sender, EventArgs e)
         {
-            outputDirty = true;
             if (ignoreChanged)
             {
                 return;

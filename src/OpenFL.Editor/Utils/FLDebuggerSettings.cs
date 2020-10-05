@@ -34,7 +34,7 @@ namespace OpenFL.Editor.Utils
                 s.Close();
                 return settings;
             }
-            catch (Exception e)
+            catch (Exception)
             {
                 s?.Close();
                 throw;
@@ -51,7 +51,7 @@ namespace OpenFL.Editor.Utils
                 xs.Serialize(s, this);
                 s.Close();
             }
-            catch (Exception e)
+            catch (Exception)
             {
                 s?.Close();
                 throw;

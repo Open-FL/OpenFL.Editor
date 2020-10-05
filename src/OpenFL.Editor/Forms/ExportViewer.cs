@@ -16,7 +16,7 @@ namespace OpenFL.Editor.Forms
     {
 
         private readonly string file;
-        public FLDataContainer Container;
+        public FLDataContainer FLContainer;
 
         public ExportViewer(string file)
         {
@@ -28,14 +28,13 @@ namespace OpenFL.Editor.Forms
         private void ExportViewer_Load(object sender, System.EventArgs e)
         {
             StyleManager.RegisterControls(this);
-
-            //FLScriptEditor.RegisterPreviewTheme(pbExportView);
+           
 
             Stream s = File.OpenRead(file);
 
             
-            FLProgram p = FLSerializer.LoadProgram(s, Container.InstructionSet).Initialize(Container);
-            FLBuffer input = Container.CreateBuffer(512, 512, 1, "Input");
+            FLProgram p = FLSerializer.LoadProgram(s, FLContainer.InstructionSet).Initialize(FLContainer);
+            FLBuffer input = FLContainer.CreateBuffer(512, 512, 1, "Input");
             p.Run(input, true);
 
             Bitmap bmp = p.GetActiveBitmap();
