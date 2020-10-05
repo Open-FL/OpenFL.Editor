@@ -40,7 +40,7 @@ namespace OpenFL.Editor
     {
 
         private static readonly ADLLogger<LogType> pluginLogger = new ADLLogger<LogType>(
-             new ProjectDebugConfig("plugin-system", -1, 20, PrefixLookupSettings.AddPrefixIfAvailable)
+             new ProjectDebugConfig("PM", -1, PrefixLookupSettings.AddPrefixIfAvailable)
             );
 
         public static TextReader LogReader;
