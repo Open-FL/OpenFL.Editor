@@ -27,19 +27,21 @@ namespace OpenFL.Editor.Forms
     {
 
         public readonly FLDataContainer FLContainer;
-        private Func<Color> ErrorColor;
-        private Func<Color> SuccessColor;
-        private Func<FLDebuggerSettings> Settings;
+        private readonly Func<Color> ErrorColor;
 
         private ContainerForm previewForm;
 
         private PictureBox previewPicture;
 
         private Task previewTask;
+        private readonly Func<FLDebuggerSettings> Settings;
+        private readonly Func<Color> SuccessColor;
 
         #region FL Build
 
-        public FL(Func<FLDebuggerSettings> settings, FLDataContainer container, Func<Color> errorColor, Func<Color> successColor)
+        public FL(
+            Func<FLDebuggerSettings> settings, FLDataContainer container, Func<Color> errorColor,
+            Func<Color> successColor)
         {
             Settings = settings;
             FLContainer = container;
@@ -62,16 +64,18 @@ namespace OpenFL.Editor.Forms
                                                 () =>
                                                     FLContainer.Parser.Process(
                                                                                new FLParserInput(
-                                                                                                 filename,
-                                                                                                 defines
-                                                                                                )
+                                                                                    filename,
+                                                                                    defines
+                                                                                   )
                                                                               )
                                                );
             return loadT;
         }
 
 
-        public bool Build(string file, List<FLProgramCheck> checks, string[] defines, Action<string> output, Action<string, Color> logMessage)
+        public bool Build(
+            string file, List<FLProgramCheck> checks, string[] defines, Action<string> output,
+            Action<string, Color> logMessage)
         {
             if (FLContainer.CheckBuilder.IsAttached)
             {
@@ -170,10 +174,11 @@ namespace OpenFL.Editor.Forms
                                            try
                                            {
                                                pro = FLContainer.SerializedProgram.Initialize(
-                                                                                              FLContainer
-                                                                                             );
+                                                    FLContainer
+                                                   );
 
-                                               pro.Run(FLContainer.CreateBuffer(
+                                               pro.Run(
+                                                       FLContainer.CreateBuffer(
                                                                                 Settings().ResX,
                                                                                 Settings().ResY,
                                                                                 Settings().ResZ,
@@ -213,7 +218,7 @@ namespace OpenFL.Editor.Forms
                                           string s = $"Errors: {previewTask.Exception.InnerExceptions.Count}\n";
 
                                           foreach (Exception exceptionInnerException in previewTask
-                                                                                        .Exception.InnerExceptions)
+                                              .Exception.InnerExceptions)
                                           {
                                               Exception ex = TaskUtils.GetInnerIfAggregate(exceptionInnerException);
                                               s +=
@@ -233,26 +238,35 @@ namespace OpenFL.Editor.Forms
             }
         }
 
-        public bool Parse(string file, string inputSource, List<FLProgramCheck> checks, string[] defines, Action<string> output, Action<string, Color> logMessage)
+        public bool Parse(
+            string file, string inputSource, List<FLProgramCheck> checks, string[] defines, Action<string> output,
+            Action<string, Color> logMessage)
         {
             bool ret = WriteAndBuild(file, inputSource, checks, defines, output, logMessage);
             ComputePreview(logMessage);
             return ret;
         }
 
-        public bool WriteAndBuild(string file, string inputSource, List<FLProgramCheck> checks, string[] defines, Action<string> output, Action<string, Color> logMessage)
+        public bool WriteAndBuild(
+            string file, string inputSource, List<FLProgramCheck> checks, string[] defines, Action<string> output,
+            Action<string, Color> logMessage)
         {
             File.WriteAllText(file, inputSource);
             return Build(file, checks, defines, output, logMessage);
         }
 
 
-        public bool StartDebugger(string file, string inputSource, List<FLProgramCheck> checks, string[] defines, Action<string> output, Action<string, Color> logMessage)
+        public bool StartDebugger(
+            string file, string inputSource, List<FLProgramCheck> checks, string[] defines, Action<string> output,
+            Action<string, Color> logMessage)
         {
             if (FLContainer.SerializedProgram == null)
             {
                 bool ret = WriteAndBuild(file, inputSource, checks, defines, output, logMessage);
-                if (!ret) return false;
+                if (!ret)
+                {
+                    return false;
+                }
             }
 
             if (FLContainer.SerializedProgram == null)
@@ -268,8 +282,8 @@ namespace OpenFL.Editor.Forms
                                       FLDebugger.StartContainer(
                                                                 FLContainer,
                                                                 FLContainer.SerializedProgram.Initialize(
-                                                                                                         FLContainer
-                                                                                                        ),
+                                                                     FLContainer
+                                                                    ),
                                                                 Settings().ResX,
                                                                 Settings().ResY,
                                                                 Settings().ResZ
@@ -294,13 +308,13 @@ namespace OpenFL.Editor.Forms
                     FLDebugger.StartContainer(
                                               FLContainer,
                                               FLContainer.SerializedProgram.Initialize(
-                                                                                       FLContainer
-                                                                                      ),
+                                                   FLContainer
+                                                  ),
                                               Settings().ResX,
                                               Settings().ResY,
                                               Settings().ResZ
                                              );
-                    logMessage($"Program Build Succeeded.\n", SuccessColor());
+                    logMessage("Program Build Succeeded.\n", SuccessColor());
                 }
                 catch (Byt3Exception exception)
                 {

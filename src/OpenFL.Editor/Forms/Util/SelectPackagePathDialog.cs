@@ -1,9 +1,7 @@
 ﻿using System;
 using System.Drawing;
-using System.IO;
 using System.Windows.Forms;
 
-using PluginSystem.Core;
 using PluginSystem.FileSystem.Packer;
 using PluginSystem.StartupActions;
 
@@ -41,10 +39,10 @@ namespace OpenFL.Editor.Forms.Util
         private void tbPath_TextChanged(object sender, EventArgs e)
         {
             btnLoad.Enabled = //(Directory.Exists(tbPath.Text) ||
-            //                   File.Exists(tbPath.Text) ||
-            //                   tbPath.Text.StartsWith("http://") ||
-            //                   tbPath.Text.StartsWith("https://")) &&
-                              PluginPacker.CanLoad(tbPath.Text);
+                //                   File.Exists(tbPath.Text) ||
+                //                   tbPath.Text.StartsWith("http://") ||
+                //                   tbPath.Text.StartsWith("https://")) &&
+                PluginPacker.CanLoad(tbPath.Text);
         }
 
         private void btnLoad_Click(object sender, EventArgs e)
@@ -81,8 +79,14 @@ namespace OpenFL.Editor.Forms.Util
 
                 Close();
             }
+
             ofdSelectFile.Multiselect = false;
-            StyledMessageBox.Show("Startup Action Written", "Will be installed on restart", MessageBoxButtons.OK, SystemIcons.Information);
+            StyledMessageBox.Show(
+                                  "Startup Action Written",
+                                  "Will be installed on restart",
+                                  MessageBoxButtons.OK,
+                                  SystemIcons.Information
+                                 );
         }
 
     }

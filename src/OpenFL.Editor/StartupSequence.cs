@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Drawing;
 using System.IO;
 using System.Linq;
@@ -15,14 +14,9 @@ using OpenFL.Editor.Utils.Plugins;
 using OpenFL.ResourceManagement;
 
 using PluginSystem.Core;
-using PluginSystem.Core.Interfaces;
 using PluginSystem.Core.Pointer;
-using PluginSystem.DefaultPlugins.Formats;
-using PluginSystem.DefaultPlugins.Formats.PackageData;
-using PluginSystem.DefaultPlugins.Formats.Packer;
 using PluginSystem.Events.Args;
 using PluginSystem.FileSystem;
-using PluginSystem.Loading.Plugins;
 using PluginSystem.StartupActions;
 using PluginSystem.Utility;
 
@@ -44,21 +38,22 @@ namespace OpenFL.Editor
 {
     public static class StartupSequence
     {
+
         private static readonly ADLLogger<LogType> pluginLogger = new ADLLogger<LogType>(
-                                                                  new ProjectDebugConfig("plugin-system", -1, 20, PrefixLookupSettings.AddPrefixIfAvailable));
+             new ProjectDebugConfig("plugin-system", -1, 20, PrefixLookupSettings.AddPrefixIfAvailable)
+            );
 
         public static TextReader LogReader;
         private static readonly PipeStream LogStream = new PipeStream();
         public static FLDataContainer FlContainer;
 
-        public static event Action CustomStartupActions;
-
         public static Loader loaderForm;
         private static Form mainForm;
 
+        public static event Action CustomStartupActions;
+
         public static void Startup(string[] args)
         {
-
             OverrideSettingsFromArguments(ParseStartupArguments(args));
 
 
@@ -77,11 +72,11 @@ namespace OpenFL.Editor
             {
                 FlContainer = new FLDataContainer();
             }
+
             ResourceManager.AddUnpacker(new FL2FLCUnpacker(FlContainer));
             ResourceManager.AddUnpacker(new FL2TexUnpacker(FlContainer));
             ResourceManager.AddUnpacker(new FLC2TexUnpacker(FlContainer));
             ResourceManager.AddUnpacker(new FLRESUnpacker());
-
 
 
             PluginManager.OnLog -= PluginManagerLoadLog;
@@ -97,7 +92,6 @@ namespace OpenFL.Editor
 
         private static void WarmStartup()
         {
-
             InitializePluginSystem();
 
             mainForm = GetRequestedForm();
@@ -313,12 +307,13 @@ namespace OpenFL.Editor
         private static void PluginManagerLoadLog(LogMessageEventArgs eventargs)
         {
             if (loaderForm != null && !loaderForm.IsDisposed)
+            {
                 loaderForm.Log(eventargs.Message, Color.Purple);
+            }
         }
 
         public static void LoadPlugins(FLScriptEditor editor)
         {
-
             AttributeManager.AddAttributeHandler(new ToolbarItemAttributeHandler(editor));
 
 

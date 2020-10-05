@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Drawing;
 using System.Linq;
 using System.Reflection;
@@ -23,10 +24,12 @@ namespace OpenFL.Editor.Utils.Plugins
     {
 
         private ListPluginsForm pluginList;
+
         [ToolbarItem("Plugins", 5)]
         private void PluginDummy()
         {
         }
+
         [ToolbarItem("Plugins/Add Plugin Package..", 0)]
         private void OnPluginAdd()
         {
@@ -36,8 +39,8 @@ namespace OpenFL.Editor.Utils.Plugins
         [ToolbarItem("Editor", 6)]
         private void EditorTopic()
         {
-
         }
+
         [ToolbarItem("Editor/Restart..", 0)]
         private void OnRestart()
         {
@@ -59,12 +62,15 @@ namespace OpenFL.Editor.Utils.Plugins
 
     public class ToolbarItemAttributeHandler : IAttributeHandler<Attribute>
     {
+
+        private readonly FLScriptEditor Editor;
+        private readonly List<ToolStripDropDownItem> pluginToolbarItems = new List<ToolStripDropDownItem>();
+        private readonly Dictionary<ToolStripDropDownItem, int> sortData = new Dictionary<ToolStripDropDownItem, int>();
+
         private readonly Queue<(IPlugin plugin, PluginAssemblyPointer ptr, MemberInfo mi, ToolbarItemAttribute obj)>
             toolbarQueue =
                 new Queue<(IPlugin plugin, PluginAssemblyPointer ptr, MemberInfo mi, ToolbarItemAttribute obj)>();
-        private readonly FLScriptEditor Editor = null;
-        private readonly Dictionary<ToolStripDropDownItem, int> sortData = new Dictionary<ToolStripDropDownItem, int>();
-        private readonly List<ToolStripDropDownItem> pluginToolbarItems = new List<ToolStripDropDownItem>();
+
         public ToolbarItemAttributeHandler(FLScriptEditor editor)
         {
             Editor = editor;
@@ -72,7 +78,15 @@ namespace OpenFL.Editor.Utils.Plugins
             Editor.Closing += Editor_Closing;
         }
 
-        private void Editor_Closing(object sender, System.ComponentModel.CancelEventArgs e)
+        public void Handle(IPlugin plugin, PluginAssemblyPointer ptr, MemberInfo mi, Attribute obj)
+        {
+            if (obj is ToolbarItemAttribute tbia)
+            {
+                AddMenuItemPath(Editor.Toolbar, plugin, ptr, mi, tbia);
+            }
+        }
+
+        private void Editor_Closing(object sender, CancelEventArgs e)
         {
             pluginToolbarItems.ForEach(x => x?.Dispose());
             pluginToolbarItems.Clear();
@@ -87,15 +101,6 @@ namespace OpenFL.Editor.Utils.Plugins
             }
         }
 
-        public void Handle(IPlugin plugin, PluginAssemblyPointer ptr, MemberInfo mi, Attribute obj)
-        {
-            if (obj is ToolbarItemAttribute tbia)
-            {
-                AddMenuItemPath(Editor.Toolbar, plugin, ptr, mi, tbia);
-            }
-        }
-
-
 
         private void OnMenuItemCreate(ToolStripDropDownItem item)
         {
@@ -106,7 +111,8 @@ namespace OpenFL.Editor.Utils.Plugins
             sortData[item] = int.MaxValue / 2;
         }
 
-        public void AddMenuItemPath(MenuStrip toolbar, IPlugin plugin, PluginAssemblyPointer ptr, MemberInfo mi, ToolbarItemAttribute obj)
+        public void AddMenuItemPath(
+            MenuStrip toolbar, IPlugin plugin, PluginAssemblyPointer ptr, MemberInfo mi, ToolbarItemAttribute obj)
         {
             if (!Editor.IsFullyLoaded)
             {
@@ -154,7 +160,9 @@ namespace OpenFL.Editor.Utils.Plugins
             }
         }
 
-        private Action CreateAction(object instance, MemberInfo mi, BindingFlags flags = BindingFlags.Instance | BindingFlags.Public | BindingFlags.NonPublic)
+        private Action CreateAction(
+            object instance, MemberInfo mi,
+            BindingFlags flags = BindingFlags.Instance | BindingFlags.Public | BindingFlags.NonPublic)
         {
             Action method = null;
             if (mi is MethodInfo mthd)
@@ -167,7 +175,10 @@ namespace OpenFL.Editor.Utils.Plugins
             }
             else
             {
-                method = () => { StyledMessageBox.Show("Error", "Could not bind", MessageBoxButtons.OK, SystemIcons.Error); };
+                method = () =>
+                         {
+                             StyledMessageBox.Show("Error", "Could not bind", MessageBoxButtons.OK, SystemIcons.Error);
+                         };
             }
 
             return method;
@@ -180,31 +191,30 @@ namespace OpenFL.Editor.Utils.Plugins
             PropertyInfo evProperty = instanceType.GetProperty(info.Name, flags);
             if (evField != null)
             {
-                MulticastDelegate del = (MulticastDelegate)evField.GetValue(instance);
+                MulticastDelegate del = (MulticastDelegate) evField.GetValue(instance);
                 return () =>
-                {
-                    foreach (Delegate handler in del.GetInvocationList())
-                    {
-                        handler.Method.Invoke(handler.Target, parameter);
-                    }
-                };
+                       {
+                           foreach (Delegate handler in del.GetInvocationList())
+                           {
+                               handler.Method.Invoke(handler.Target, parameter);
+                           }
+                       };
             }
 
             if (evProperty != null)
             {
-                MulticastDelegate del = (MulticastDelegate)evProperty.GetValue(instance);
+                MulticastDelegate del = (MulticastDelegate) evProperty.GetValue(instance);
                 return () =>
-                {
-                    foreach (Delegate handler in del.GetInvocationList())
-                    {
-                        handler.Method.Invoke(handler.Target, null);
-                    }
-                };
+                       {
+                           foreach (Delegate handler in del.GetInvocationList())
+                           {
+                               handler.Method.Invoke(handler.Target, null);
+                           }
+                       };
             }
 
             return () => { StyledMessageBox.Show("Error", "Could not bind", MessageBoxButtons.OK, SystemIcons.Error); };
         }
-
 
     }
 }

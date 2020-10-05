@@ -21,21 +21,16 @@ namespace OpenFL.Editor.Forms.Debug
 {
     public partial class FLDebuggerWindow : Form, IPluginHost
     {
-        public Color DebuggerBreakpointColor { get; set; } = Color.DarkRed;
-        public Color DebuggerBreakpointHitColor { get; set; } = Color.Orange;
-
-        public event Action<FLProgram, FLBuffer> OnInternalBufferClick;
-        public event Action<FLProgram, FLBuffer> OnBufferClick;
 
         private readonly CustomCheckedListBox clbCode;
         private readonly Dictionary<IParsedObject, int> marks;
+        private readonly FLProgram Program;
         private readonly string Source;
 
 
         private bool continueEx;
         private bool exitDirect;
         private bool nohalt;
-        private readonly FLProgram Program;
         private int selectedLine;
         private bool started;
 
@@ -58,6 +53,27 @@ namespace OpenFL.Editor.Forms.Debug
 
             StyleManager.RegisterControls(this);
         }
+
+        public Color DebuggerBreakpointColor { get; set; } = Color.DarkRed;
+
+        public Color DebuggerBreakpointHitColor { get; set; } = Color.Orange;
+
+        public bool IsAllowedPlugin(IPlugin plugin)
+        {
+            return true;
+        }
+
+        public void OnPluginLoad(IPlugin plugin, BasePluginPointer ptr)
+        {
+        }
+
+        public void OnPluginUnload(IPlugin plugin)
+        {
+        }
+
+        public event Action<FLProgram, FLBuffer> OnInternalBufferClick;
+
+        public event Action<FLProgram, FLBuffer> OnBufferClick;
 
 
         private void CodeView_Load(object sender, EventArgs e)
@@ -87,8 +103,6 @@ namespace OpenFL.Editor.Forms.Debug
             FLBuffer buf = lbInternalBuffers.SelectedItem as FLBuffer;
 
             OnInternalBufferClick?.Invoke(Program, buf);
-
-            
         }
 
         private Color GetCodeItemForeColor(CustomCheckedListBox listbox, DrawItemEventArgs e)
@@ -126,8 +140,6 @@ namespace OpenFL.Editor.Forms.Debug
             }
 
             OnBufferClick?.Invoke(Program, Program.GetBufferWithName(lbBuffers.SelectedItem.ToString(), false));
-
-            
         }
 
         private int GetLineOfObject(IParsedObject obj)
@@ -199,19 +211,6 @@ namespace OpenFL.Editor.Forms.Debug
         }
 
         private void lbBuffers_SelectedIndexChanged(object sender, EventArgs e)
-        {
-        }
-
-        public bool IsAllowedPlugin(IPlugin plugin)
-        {
-            return true;
-        }
-
-        public void OnPluginLoad(IPlugin plugin, BasePluginPointer ptr)
-        {
-        }
-
-        public void OnPluginUnload(IPlugin plugin)
         {
         }
 

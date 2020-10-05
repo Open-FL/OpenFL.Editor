@@ -30,7 +30,6 @@ namespace OpenFL.Editor.Forms.Util
             }
 
 
-
             StyleManager.RegisterControls(this);
         }
 
@@ -88,9 +87,11 @@ namespace OpenFL.Editor.Forms.Util
                     {
                         ActionRunner.AddActionToStartup($"{ActionRunner.DEACTIVATE_PACKAGE_ACTION} {ptr.PluginName}");
                     }
+
                     lbPlugins.Items.Remove(lbPlugins.SelectedItem);
                 }
             }
         }
+
     }
 }

@@ -5,7 +5,6 @@ using System.Drawing;
 using System.IO;
 using System.Linq;
 using System.Reflection;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 
 using OpenFL.Core;
@@ -20,7 +19,6 @@ using PluginSystem.FileSystem;
 
 using ThemeEngine;
 
-using Utility.Collections;
 using Utility.WindowsForms.CustomControls;
 using Utility.WindowsForms.Forms;
 
@@ -29,41 +27,56 @@ namespace OpenFL.Editor.Forms
     public partial class FLScriptEditor : Form
     {
 
+        #region Utility
+
+        public void OpenFileDialog()
+        {
+            if (openFLScript.ShowDialog() == DialogResult.OK)
+            {
+                Path = openFLScript.FileName;
+                rtbIn.Text = File.ReadAllText(Path);
+            }
+        }
+
+        #endregion
+
         #region Fields / Properties
 
         public Color ErrorColor { get; set; } = Color.Red;
+
         public Color SuccessColor { get; set; } = Color.Green;
+
         public Color FLComments { get; set; } = Color.Aqua;
+
         public Color FLDefines { get; set; } = Color.Orange;
+
         public Color FLFunctions { get; set; } = Color.Crimson;
+
         public Color PPKeys { get; set; } = Color.Green;
 
         public event Action OnLoadComplete;
 
         public static readonly string TempEditorContentPath = System.IO.Path.Combine(
-                                                                                     System.IO.Path.GetDirectoryName(
-                                                                                                                     Assembly
-                                                                                                                         .GetExecutingAssembly()
-                                                                                                                         .Location
-                                                                                                                    ),
-                                                                                     "tempeditorcontent_" +
-                                                                                     System
-                                                                                         .IO.Path
-                                                                                         .GetFileNameWithoutExtension(
-                                                                                                                      System
-                                                                                                                          .IO
-                                                                                                                          .Path
-                                                                                                                          .GetRandomFileName()
-                                                                                                                     ) +
-                                                                                     ".fl"
-                                                                                    );
+             System.IO.Path.GetDirectoryName(
+                                             Assembly
+                                                 .GetExecutingAssembly()
+                                                 .Location
+                                            ),
+             "tempeditorcontent_" +
+             System.IO.Path
+                   .GetFileNameWithoutExtension(
+                                                System.IO.Path
+                                                      .GetRandomFileName()
+                                               ) +
+             ".fl"
+            );
 
         public MenuStrip Toolbar => msToolbar;
 
         private static readonly string DEFAULT_SCRIPT =
             $"{FLKeywords.EntryFunctionKey}:\n\tsetactive 3\n\tSet_v 1\n\tsetactive 0 1 2\n\tSet_v 1";
 
-        
+
         public readonly FLEditorPluginHost PluginHost;
 
         public static string ConfigPath
@@ -104,13 +117,17 @@ namespace OpenFL.Editor.Forms
             get => FLImplementation?.FLContainer;
             set
             {
-                if (FLImplementation == null) FLImplementation = new FL(() => Settings, value, () => ErrorColor, () => SuccessColor);
+                if (FLImplementation == null)
+                {
+                    FLImplementation = new FL(() => Settings, value, () => ErrorColor, () => SuccessColor);
+                }
                 else
                 {
                     throw new Exception();
                 }
             }
         }
+
         public FL FLImplementation { get; private set; }
 
         private bool ignoreChanged;
@@ -124,6 +141,7 @@ namespace OpenFL.Editor.Forms
         public List<FLProgramCheck> ProgramChecks => lbOptimizations.CheckedItems.Cast<FLProgramCheck>().ToList();
 
         public string[] Defines => new[] { cbBuildMode.SelectedItem.ToString().ToUpper() };
+
         #endregion
 
         #region Constructor
@@ -148,6 +166,7 @@ namespace OpenFL.Editor.Forms
         {
             Directory.SetCurrentDirectory(workingDir);
         }
+
         #endregion
 
         #region Logging
@@ -219,11 +238,15 @@ namespace OpenFL.Editor.Forms
             OnLoadStartupFile?.Invoke(Path);
 
 
-
-            
             rtbParserOutput.TextChanged += RtbParserOutputTextChanged;
 
-            FLContainer.SetCheckBuilder(new FLProgramCheckBuilder(FLContainer.InstructionSet, FLContainer.BufferCreator, FLProgramCheckType.All));
+            FLContainer.SetCheckBuilder(
+                                        new FLProgramCheckBuilder(
+                                                                  FLContainer.InstructionSet,
+                                                                  FLContainer.BufferCreator,
+                                                                  FLProgramCheckType.All
+                                                                 )
+                                       );
 
             for (int i = 0; i < FLContainer.CheckBuilder.ProgramChecks.Count; i++)
             {
@@ -242,7 +265,6 @@ namespace OpenFL.Editor.Forms
             IsFullyLoaded = true;
 
             OnLoadComplete?.Invoke();
-
 
 
             //StartupSequence.LoadPlugins(this);
@@ -278,6 +300,7 @@ namespace OpenFL.Editor.Forms
                                          );
             container.Height = 0;
         }
+
         private static void MakeResizable(
             Control control, ResizeableControl.EdgeEnum activeEdges,
             params Control[] dockedChildren)
@@ -368,7 +391,7 @@ namespace OpenFL.Editor.Forms
             for (int i = 0; i < lbOptimizations.Items.Count; i++)
             {
                 object lbOptimizationsItem = lbOptimizations.Items[i];
-                FLProgramCheck pc = (FLProgramCheck)lbOptimizationsItem;
+                FLProgramCheck pc = (FLProgramCheck) lbOptimizationsItem;
                 lbOptimizations.SetItemChecked(
                                                i,
                                                (pc.CheckType & checkType) != 0
@@ -408,10 +431,12 @@ namespace OpenFL.Editor.Forms
 
         private void cbBuildMode_SelectedIndexChanged(object sender, EventArgs e)
         {
-            SelectBuildMode((FLProgramCheckType)Enum.Parse(
-                                                           typeof(FLProgramCheckType),
-                                                           cbBuildMode.SelectedItem.ToString()
-                                                          ));
+            SelectBuildMode(
+                            (FLProgramCheckType) Enum.Parse(
+                                                            typeof(FLProgramCheckType),
+                                                            cbBuildMode.SelectedItem.ToString()
+                                                           )
+                           );
         }
 
 
@@ -429,7 +454,7 @@ namespace OpenFL.Editor.Forms
         {
             rtbParserOutput.ScrollToCaret();
         }
-        
+
         private void rtbIn_TextChanged(object sender, EventArgs e)
         {
             if (ignoreChanged)
@@ -480,21 +505,7 @@ namespace OpenFL.Editor.Forms
             Parse();
         }
 
-
         #endregion
 
-        #region Utility
-
-        public void OpenFileDialog()
-        {
-            if (openFLScript.ShowDialog() == DialogResult.OK)
-            {
-                Path = openFLScript.FileName;
-                rtbIn.Text = File.ReadAllText(Path);
-            }
-        }
-
-        #endregion
-        
     }
 }

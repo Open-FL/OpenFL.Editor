@@ -45,7 +45,7 @@ namespace OpenFL.Editor.Forms.Debug
             }
 
             btnContinue.Enabled = false;
-            
+
             Close();
         }
 

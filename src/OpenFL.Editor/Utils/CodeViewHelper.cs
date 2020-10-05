@@ -32,7 +32,8 @@ namespace OpenFL.Editor.Utils
             box.ZoomFactor = zoom;
         }
 
-        public static void WriteSource(this RichTextBox rtb, string source, Color flDefines, Color ppKeys, Color flFunctions, Color flComments)
+        public static void WriteSource(
+            this RichTextBox rtb, string source, Color flDefines, Color ppKeys, Color flFunctions, Color flComments)
         {
             rtb.SuspendLayout();
             int oldPos = rtb.SelectionStart;

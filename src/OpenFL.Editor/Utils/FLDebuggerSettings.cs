@@ -13,12 +13,12 @@ namespace OpenFL.Editor.Utils
         public string KernelPath = "resources/kernel";
         public bool LogParserStacktrace;
         public bool LogProgramStacktrace;
+        public string PluginInit;
         public int ResX = 512;
         public int ResY = 512;
         public int ResZ = 1;
         public string ScriptPath;
         public string WorkingDir;
-        public string PluginInit;
 
         public string[] InitFiles => PluginInit.Split(';');
 
