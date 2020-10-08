@@ -26,16 +26,17 @@ namespace OpenFL.Editor.Forms
     public class FL
     {
 
-        public readonly FLDataContainer FLContainer;
         private readonly Func<Color> ErrorColor;
+
+        public readonly FLDataContainer FLContainer;
+        private readonly Func<FLDebuggerSettings> Settings;
+        private readonly Func<Color> SuccessColor;
 
         private ContainerForm previewForm;
 
         private PictureBox previewPicture;
 
         private Task previewTask;
-        private readonly Func<FLDebuggerSettings> Settings;
-        private readonly Func<Color> SuccessColor;
 
         #region FL Build
 
