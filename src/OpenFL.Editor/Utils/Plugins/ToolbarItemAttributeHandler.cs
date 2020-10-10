@@ -9,15 +9,6 @@ using System.Windows.Forms;
 using OpenFL.Editor.Forms;
 using OpenFL.Editor.Forms.Util;
 
-using PluginSystem.Core.Interfaces;
-using PluginSystem.Core.Pointer;
-using PluginSystem.Utility;
-
-using ThemeEngine;
-using ThemeEngine.Forms;
-
-using Utility.WindowsForms.CustomControls.ToolStripPaths;
-
 namespace OpenFL.Editor.Utils.Plugins
 {
     public class DefaultToolbarItems : APlugin<FLEditorPluginHost>

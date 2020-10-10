@@ -3,9 +3,6 @@
 using OpenFL.Editor.Forms;
 using OpenFL.Editor.Properties;
 
-using PluginSystem.Core.Interfaces;
-using PluginSystem.Core.Pointer;
-
 namespace OpenFL.Editor
 {
     public class FLEditorPluginHost : IPluginHost

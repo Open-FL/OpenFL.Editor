@@ -6,20 +6,8 @@ using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
-using OpenFL.Core;
-using OpenFL.Core.DataObjects.ExecutableDataObjects;
-using OpenFL.Core.DataObjects.SerializableDataObjects;
-using OpenFL.Core.Parsing.StageResults;
-using OpenFL.Core.ProgramChecks;
-using OpenFL.Debugging;
 using OpenFL.Editor.Properties;
 using OpenFL.Editor.Utils;
-
-using ThemeEngine;
-
-using Utility.Exceptions;
-using Utility.FastString;
-using Utility.WindowsForms.Forms;
 
 namespace OpenFL.Editor.Forms
 {

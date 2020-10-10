@@ -3,15 +3,6 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Windows.Forms;
 
-using PluginSystem.Core;
-using PluginSystem.Core.Interfaces;
-using PluginSystem.Core.Pointer;
-using PluginSystem.FileSystem;
-using PluginSystem.StartupActions;
-using PluginSystem.Utility;
-
-using ThemeEngine;
-
 namespace OpenFL.Editor.Forms.Util
 {
     public partial class ListPluginsForm : Form

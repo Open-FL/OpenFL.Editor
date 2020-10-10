@@ -7,20 +7,9 @@ using System.Linq;
 using System.Reflection;
 using System.Windows.Forms;
 
-using OpenFL.Core;
-using OpenFL.Core.ProgramChecks;
-using OpenFL.Debugging;
 using OpenFL.Editor.Forms.Debug;
 using OpenFL.Editor.Properties;
 using OpenFL.Editor.Utils;
-
-using PluginSystem.Core;
-using PluginSystem.FileSystem;
-
-using ThemeEngine;
-
-using Utility.WindowsForms.CustomControls;
-using Utility.WindowsForms.Forms;
 
 namespace OpenFL.Editor.Forms
 {

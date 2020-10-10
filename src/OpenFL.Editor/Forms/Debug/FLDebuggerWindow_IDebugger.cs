@@ -2,10 +2,6 @@
 using System.Diagnostics;
 using System.Windows.Forms;
 
-using OpenFL.Core;
-using OpenFL.Core.DataObjects.ExecutableDataObjects;
-using OpenFL.Debugging;
-
 namespace OpenFL.Editor.Forms.Debug
 {
     public partial class FLDebuggerWindow : IProgramDebugger

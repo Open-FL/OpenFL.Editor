@@ -6,12 +6,6 @@ using System.Windows.Forms;
 using OpenFL.Editor.Properties;
 using OpenFL.Editor.Utils;
 
-using ThemeEngine;
-
-using Utility.Exceptions;
-using Utility.WindowsForms.CustomControls;
-using Utility.WindowsForms.Forms;
-
 namespace OpenFL.Editor.Forms.Util
 {
     public partial class Loader : Form
