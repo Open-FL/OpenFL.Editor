@@ -1,6 +1,9 @@
 ﻿using System.Collections.Generic;
 using System.Text;
 
+using OpenFL.Core.Buffers;
+using OpenFL.Core.DataObjects.ExecutableDataObjects;
+
 namespace OpenFL.Editor.Utils
 {
     public static class FLDebugHelper

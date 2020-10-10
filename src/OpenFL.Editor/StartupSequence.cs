@@ -6,10 +6,33 @@ using System.Reflection;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
+using OpenFL.Core;
 using OpenFL.Editor.Forms;
 using OpenFL.Editor.Forms.Util;
 using OpenFL.Editor.Utils;
 using OpenFL.Editor.Utils.Plugins;
+using OpenFL.ResourceManagement;
+
+using PluginSystem.Core;
+using PluginSystem.Core.Pointer;
+using PluginSystem.Events.Args;
+using PluginSystem.FileSystem;
+using PluginSystem.StartupActions;
+using PluginSystem.Utility;
+
+using ThemeEngine;
+using ThemeEngine.Forms;
+
+using Utility.ADL;
+using Utility.ADL.Configs;
+using Utility.ADL.Streams;
+using Utility.CommandRunner;
+using Utility.CommandRunner.BuiltInCommands.SetSettings;
+using Utility.Exceptions;
+using Utility.IO.VirtualFS;
+using Utility.TypeManagement;
+using Utility.WindowsForms.CustomControls;
+using Utility.WindowsForms.Forms;
 
 namespace OpenFL.Editor
 {

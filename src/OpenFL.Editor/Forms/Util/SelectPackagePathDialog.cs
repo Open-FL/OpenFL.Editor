@@ -2,6 +2,12 @@
 using System.Drawing;
 using System.Windows.Forms;
 
+using PluginSystem.FileSystem.Packer;
+using PluginSystem.StartupActions;
+
+using ThemeEngine;
+using ThemeEngine.Forms;
+
 namespace OpenFL.Editor.Forms.Util
 {
     public partial class SelectPackagePathDialog : Form

@@ -1,4 +1,8 @@
-﻿namespace OpenFL.Editor.Utils
+﻿using ThemeEngine;
+
+using Utility.WindowsForms.CustomControls;
+
+namespace OpenFL.Editor.Utils
 {
     public static class ProgressIndicatorThemeHelper
     {

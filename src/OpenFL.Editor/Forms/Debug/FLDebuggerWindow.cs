@@ -2,9 +2,20 @@
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Drawing;
+using System.Linq;
 using System.Windows.Forms;
 
+using OpenFL.Core.Buffers;
+using OpenFL.Core.DataObjects.ExecutableDataObjects;
 using OpenFL.Editor.Properties;
+using OpenFL.Editor.Utils;
+
+using PluginSystem.Core.Interfaces;
+using PluginSystem.Core.Pointer;
+
+using ThemeEngine;
+
+using Utility.WindowsForms.CustomControls;
 
 namespace OpenFL.Editor.Forms.Debug
 {

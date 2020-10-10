@@ -3,7 +3,13 @@ using System.Drawing;
 using System.IO;
 using System.Windows.Forms;
 
+using OpenFL.Core;
+using OpenFL.Core.Buffers;
+using OpenFL.Core.DataObjects.ExecutableDataObjects;
 using OpenFL.Editor.Properties;
+using OpenFL.Serialization;
+
+using ThemeEngine;
 
 namespace OpenFL.Editor.Forms
 {
